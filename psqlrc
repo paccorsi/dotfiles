@@ -1,0 +1,180 @@
+--------------------------------------------
+-- psql configuration file 
+--------------------------------------------
+
+\set QUIET 1
+
+--------------------------------------------
+-- Prompts
+-- Prompt1 / Prompt2 / Prompt3
+-- %M : server
+-- %m : host name
+-- %> : port
+-- %n : user
+-- %/ : current database
+-- %~ : like %/ but ~ for default database
+-- %# : '#' if superuser, '>' otherwise
+-- %R
+-- %x
+-- %[...%] : terminal control characters
+-- Examples
+-- \set PROMPT1 '%M:%/ '  myserver:mydatabase
+-- \set PROMPT1 '%M:%/ '  myserver:mydatabase
+-- \set PROMPT1 '%M:%/ '  myserver:mydatabase
+-- \set PROMPT1 '%M:%/ '  myserver:mydatabase
+-- \set PROMPT1 '%M:%/ '  myserver:mydatabase
+-- \set PROMPT1 '%M:%/ '  myserver:mydatabase
+
+\set PROMPT1 '%n@%/ %# '
+\set PROMPT2 '%# '
+-- \set PROMPT3 ''
+
+--------------------------------------------
+-- Timing
+-- Print the time each query took
+-- Values: on off (or without values, toggles)
+
+\timing
+
+--------------------------------------------
+-- tuples
+-- Values: 
+
+--\t
+--\pset tuples_only
+
+--------------------------------------------
+-- nulls
+-- how to display null values
+
+\pset null '[NULL]'
+
+--------------------------------------------
+-- linestyle
+-- border drawing style
+-- values:ascii,old-ascii,unicode
+
+\pset linestyle unicode
+
+--------------------------------------------
+-- border
+-- number of borders and lines for the tables
+-- values:number
+
+\pset border 2
+
+--------------------------------------------
+-- Extended display
+-- Values auto (>=9.2), on, off
+
+\x auto
+
+--------------------------------------------
+-- AUTOCOMMIT
+-- Values: on off
+
+-- \set AUTOCOMMIT on
+
+--------------------------------------------
+-- COMP_KEYWORD_CASE
+-- Values: lower,upper,preserve-lower,preserve-upper
+
+\set COMP_KEYWORD_CASE upper
+
+--------------------------------------------
+-- ENCODING
+-- Values: 
+
+--------------------------------------------
+-- HISTFILE
+-- File used to store history list
+-- Values: 
+
+--\set HISTFILE ~/.psql_history- :DBNAME
+
+--------------------------------------------
+-- HISTSIZE
+-- Values: numeric, defaults to 500
+
+--\set HISTSIZE 500
+
+--------------------------------------------
+-- HISTCONTROL
+-- Values: ignorespace,ignoredups,ignoreboth
+
+\set HISTCONTROL ignoreboth
+
+
+--------------------------------------------
+-- IGNOREEOF
+-- number of EOF (ctrl-D) to ignore before terminating
+-- Values: 
+
+-- \set IGNOREEOF 2
+
+--------------------------------------------
+-- ON_ERROR_ROLLBACK
+-- Values: on,interactive,off
+
+--------------------------------------------
+-- ON_ERROR_STOP
+-- Values: 
+
+--------------------------------------------
+-- SINGLELINE
+-- newline terminates an SQL command
+-- Values: 
+
+--------------------------------------------
+-- SINGLESTEP
+-- single step mode: to debug scripts
+-- Values: 
+
+--------------------------------------------
+-- VERBOSITY
+-- for error reports
+-- Values: default,verbose,terse
+
+\set VERBOSITY verbose
+
+--------------------------------------------
+-- Custom variables and shortcuts
+
+\set eav 'EXPLAIN ANALYZE VERBOSE'
+
+--------------------------------------------
+-- Custom queries
+
+-- number of connected backends
+\set backends ''
+
+-- running queries (9.0)
+-- \set queries  'select current_timestamp - query_start as runtime,datname,usename,current_query from pg_stat_activity where current_query != \'<IDLE>\' order by 1 desc;'
+
+-- running queries (9.3)
+\set queries  'select current_timestamp - query_start as runtime,pid,datname,usename,query from pg_stat_activity where query != \'<IDLE>\' order by 1 desc; '
+
+-- server uptime
+\set uptime   'select date_trunc(\'second\',current_timestamp - pg_postmaster_start_time()) as uptime;'
+
+-- table size
+\set table_size 'select nspname || \'.\' || relname AS \"relation\", pg_size_pretty(pg_relation_size(C.oid)) AS "size" from pg_class C left join pg_namespace N on (N.oid = C.relnamespace) where nspname not in (\'pg_catalog\', \'information_schema\') order by pg_relation_size(C.oid) desc limit 20;'
+
+-- database size
+\set database_size 'SELECT d.datname AS Name, pg_catalog.pg_get_userbyid(d.datdba) AS Owner, CASE WHEN pg_catalog.has_database_privilege(d.datname, \'CONNECT\') THEN pg_catalog.pg_size_pretty(pg_catalog.pg_database_size(d.datname)) ELSE \'No Access\' END AS Size FROM pg_catalog.pg_database d ORDER BY CASE WHEN pg_catalog.has_database_privilege(d.datname, \'CONNECT\') THEN pg_catalog.pg_database_size(d.datname) ELSE NULL END DESC LIMIT 20;' 
+
+-- buffer cache hit ratio
+\set buffer_cache_hit_ratio 'select datname, blks_hit::float/(blks_hit+blks_read) as hit_ratio from pg_stat_database where blks_read+blks_hit <> 0;'
+
+--------------------------------------------
+\set QUIET 0
+
+\echo '----------------------------------------------------'
+\echo 'Custom queries:'
+\echo '\t' ':backends'
+\echo '\t' ':buffer_cache_hit_ratio'
+\echo '\t' ':database_size'
+\echo '\t' ':queries'
+\echo '\t' ':table_size'
+\echo '\t' ':uptime'
+
