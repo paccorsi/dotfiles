@@ -32,6 +32,9 @@ source $ZSH/oh-my-zsh.sh
 # Include secrets
 [[ -f ~/.secrets ]] && source ~/.secrets
 
+# Include fuzzy matching
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 bindkey -e
 bindkey '^D'  delete-char
 bindkey '\e\e[C' forward-word

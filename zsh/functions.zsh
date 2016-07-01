@@ -93,8 +93,7 @@ change_extension() {
 
 # Update all the things
 update() {
-    brew update
-    brew upgrade
+    (brew update && brew doctor && brew upgrade)
     pip2 install -U $(pip2 list --outdated | awk '{printf $1" "}')
     pip3 install -U $(pip3 list --outdated | awk '{printf $1" "}')
     gem update
