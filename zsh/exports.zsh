@@ -4,6 +4,7 @@ export GOPATH=$HOME/go
 export HADOOP_HOME=/usr/local/Cellar/hadoop/2.7.2
 export HADOOP_CONF_DIR=$HADOOP_HOME/libexec/etc/hadoop
 
+export PYTHONSTARTUP=$HOME/startup.py
 
 export PATH=$HADOOP_PATH/bin:$PATH
 export PATH=~/anaconda/bin:$PATH
