@@ -94,6 +94,7 @@ change_extension() {
 # Update all the things
 update() {
     (brew update && brew doctor && brew upgrade)
+    brew list > ~/.brew_list
     pip2 install -U $(pip2 list --outdated | awk '{printf $1" "}')
     pip3 install -U $(pip3 list --outdated | awk '{printf $1" "}')
     gem update

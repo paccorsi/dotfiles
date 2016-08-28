@@ -13,6 +13,18 @@ alias gpl="git pull"
 alias gstop="gco origin/master -- "
 alias gD="git diff HEAD~1 HEAD"
 
+function gCP () {
+    git add --all
+    git commit -m "$1"
+    git push origin HEAD
+}
+
+function gC () {
+    git add --all
+    git commit --ammend -C HEAD
+    git push origin +HEAD
+}
+
 # Mac
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
