@@ -50,5 +50,4 @@ alias migrate="rake db:migrate db:rollback && rake db:migrate db:test:prepare"
 alias s="rspec"
 
 # Misc
-alias kickstart="itermocil --here "
 alias cask="brew cask"

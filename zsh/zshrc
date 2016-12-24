@@ -1,5 +1,6 @@
 export ZSH=~/.oh-my-zsh
 
+export TERM="xterm-256color"
 ZSH_THEME="bullet-train"
 DISABLE_AUTO_UPDATE="true"
 COMPLETION_WAITING_DOTS="true"
@@ -31,10 +32,12 @@ source $ZSH/oh-my-zsh.sh
 [[ -f ~/.functions ]] && source ~/.functions
 # Include secrets
 [[ -f ~/.secrets ]] && source ~/.secrets
-
 # Include fuzzy matching
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+# Key bindings
 bindkey -e
 bindkey '^D'  delete-char
 bindkey '\e\e[C' forward-word
@@ -47,14 +50,5 @@ autoload -U compinit
 compinit
 compctl -g '~/.teamocil/*(:t:r)' kickstart
 
-rationalise-dot() {
-    if [[ $LBUFFER = *.. ]]; then
-        LBUFFER+=/..
-    else
-        LBUFFER+=.
-    fi
-}
-
-zle -N rationalise-dot
-bindkey . rationalise-dot
+# History
 bindkey -M isearch . self-insert # history search fix

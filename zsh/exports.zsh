@@ -14,3 +14,6 @@ export PATH=$GOBIN:$PATH
 export PATH=~/.rbenv/shims:$PATH
 export PATH=~/.vimpkg/bin:$PATH
 export PATH=~/anaconda/bin:$PATH
+
+# OPAM configuration
+. ~/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true

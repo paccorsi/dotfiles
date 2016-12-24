@@ -1,7 +1,3 @@
-font_test() {
-    echo "\ue0b0 \u00b1 \ue0a0 \u27a6 \u2718 \u26a1 \u2699"
-}
-
 # -------------------------------------------------------------------
 # compressed file expander
 # (from https://github.com/myfreeweb/zshuery/blob/master/zshuery.sh)
@@ -34,7 +30,7 @@ ex() {
 # ps with a grep
 # from http://hiltmon.com/blog/2013/07/30/quick-process-search/
 # --------------------------------------------------------------------
-function psax() {
+psax() {
   ps auxwwwh | grep "$@" | grep -v grep
 }
 
@@ -170,28 +166,6 @@ encrypt() {
     openssl aes-256-cbc -a -salt -in $1 -out $1.enc
 }
 
-console_tab() {
-    osascript &>/dev/null <<EOF
-        tell application "iTerm"
-            tell current terminal
-            launch session "Default Session"
-            tell the last session
-        end tell
-EOF
-}
-
-console_split() {
-    osascript &>/dev/null <<EOF
-        tell application "iTerm"
-            tell current terminal
-            tell application "System Events" to keystroke "k" using command down
-            delay 1
-            tell the current session to write text "$@"
-        end tell
-    end tell
-EOF
-}
-
 # Prints the weather
 weather() {
     if [ -z "$1" ]
@@ -200,4 +174,48 @@ weather() {
     else
         curl -s wttr.in/$1 | head -n 7
     fi
+}
+
+# fbr - checkout git branch (including remote branches)
+fbr() {
+    local branches branch
+    branches=$(git branch --all | grep -v HEAD) &&
+    branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+    git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+
+# fco - checkout git branch/tag
+fco() {
+    local tags branches target
+    tags=$(
+        git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
+    branches=$(
+        git branch --all | grep -v HEAD             |
+        sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
+        sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
+    target=$(
+        (echo "$tags"; echo "$branches") |
+        fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
+    git checkout $(echo "$target" | awk '{print $2}')
+}
+
+# fcoc - checkout git commit
+fcoc() {
+    local commits commit
+    commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
+    commit=$(echo "$commits" | fzf --tac +s +m -e) &&
+    git checkout $(echo "$commit" | sed "s/ .*//")
+}
+
+# fshow - git commit browser
+fshow() {
+    git log --graph --color=always \
+            --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+    fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+        --bind "ctrl-m:execute:
+                    (grep -o '[a-f0-9]\{7\}' | head -1 |
+                    xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+                    {}
+FZF-EOF"
 }
