@@ -12,7 +12,9 @@ ln -svf ~/dotfiles/git/gitconfig ~/.gitconfig
 ln -svf ~/dotfiles/git/gitignore ~/.gitignore
 
 # VIM
-ln -svf ~/dotfiles/vim/vimrc ~/.vimrc
+ln -svf ~/dotfiles/vim/vimrc ~/.nvimrc
+ln -svf ~/dotfiles/vim/nvim ~/nvim
+ln -svf ~/dotfiles/vim/ideavimrc ~/.ideavimrc
 
 # Postgres
 ln -svf ~/dotfiles/psqlrc ~/.psqlrc
