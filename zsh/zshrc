@@ -9,7 +9,6 @@ plugins=(git github zsh-syntax-highlighting vagrant virtualenv pip python brew o
 
 BULLETTRAIN_PROMPT_ORDER=(
     git
-    context
     dir
 )
 
@@ -44,7 +43,7 @@ bindkey '\e\e[C' forward-word
 bindkey '\e\e[D' backward-word
 
 # Completion
-fpath=(~.completions $fpath)
+fpath=(~/.completions $fpath)
 setopt complete_aliases
 autoload -U compinit
 compinit

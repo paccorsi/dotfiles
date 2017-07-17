@@ -1,20 +1,34 @@
 #!/usr/bin/env bash
 
+path="$(pwd)"
+
+# Brew
+brew update
+brew install neovim
+brew install zsh zsh-completions
+brew install fzf
+brew install wget
+brew install getantibody/tap/antibody
+
 # ZSH
-ln -svf ~/dotfiles/zsh/zshenv ~/.zshenv
-ln -svf ~/dotfiles/zsh/zshrc ~/.zshrc
-ln -svf ~/dotfiles/zsh/aliases.zsh ~/.aliases
-ln -svf ~/dotfiles/zsh/exports.zsh ~/.exports
-ln -svf ~/dotfiles/zsh/functions.zsh ~/.functions
+chsh -s $(which zsh)
+
+ln -svf $path/zsh/zshenv ~/.zshenv
+ln -svf $path/zsh/zshrc ~/.zshrc
+ln -svf $path/zsh/aliases.zsh ~/.aliases
+ln -svf $path/zsh/exports.zsh ~/.exports
+ln -svf $path/zsh/functions.zsh ~/.functions
 
 # GIT
-ln -svf ~/dotfiles/git/gitconfig ~/.gitconfig
-ln -svf ~/dotfiles/git/gitignore ~/.gitignore
+ln -svf $path/git/gitconfig ~/.gitconfig
+ln -svf $path/git/gitignore ~/.gitignore
 
 # VIM
-ln -svf ~/dotfiles/vim/vimrc ~/.nvimrc
-ln -svf ~/dotfiles/vim/nvim ~/nvim
-ln -svf ~/dotfiles/vim/ideavimrc ~/.ideavimrc
+ln -svf $path/vim/nvim/config ~/.config
+ln -svf $path/vim/ideavimrc ~/.ideavimrc
 
 # Postgres
-ln -svf ~/dotfiles/psqlrc ~/.psqlrc
+ln -svf $path/psqlrc ~/.psqlrc
+
+# Additional scripts
+ln -svf $path/startup.py ~/startup.py
