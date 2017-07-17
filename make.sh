@@ -18,6 +18,7 @@ ln -svf $path/zsh/zshrc ~/.zshrc
 ln -svf $path/zsh/aliases.zsh ~/.aliases
 ln -svf $path/zsh/exports.zsh ~/.exports
 ln -svf $path/zsh/functions.zsh ~/.functions
+touch ~/.hushlogin # Avoid "Last Login: xyz"
 
 # GIT
 ln -svf $path/git/gitconfig ~/.gitconfig
