@@ -21,7 +21,7 @@ function gCP () {
 
 function gC () {
     git add --all
-    git commit --ammend -C HEAD
+    git commit --amend -C HEAD
     git push origin +HEAD
 }
 

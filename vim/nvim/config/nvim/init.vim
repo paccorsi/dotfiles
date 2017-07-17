@@ -103,3 +103,9 @@ autocmd FileType javascript,typescript,css,scss,json setlocal foldmethod=marker
 autocmd FileType javascript,typescript,css,scss,json setlocal foldmarker={,}
 autocmd FileType coffee setl foldmethod=indent
 
+source ~/.config/nvim/keys.vim
+source ~/.config/nvim/lang.vim
+source ~/.config/nvim/plugins.vim
+source ~/.config/nvim/theme.vim
+source ~/.config/nvim/unite.vim
+
