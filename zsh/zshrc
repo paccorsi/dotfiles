@@ -5,12 +5,13 @@ ZSH_THEME="bullet-train"
 DISABLE_AUTO_UPDATE="true"
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(git github zsh-syntax-highlighting vagrant virtualenv pip python brew osx)
-
-BULLETTRAIN_PROMPT_ORDER=(
-    git
-    dir
+plugins=(
+    git github git-extras zsh-syntax-highlighting vagrant virtualenv
+    pip python brew osx bundler cabal docker gem httpie knife macports
+    npm pep8 pyenv rails ruby sbt scala ssh-agent
 )
+
+BULLETTRAIN_PROMPT_ORDER=(git dir)
 
 BULLETTRAIN_GIT_PROMPT_CMD="\$(custom_git_prompt)"
 

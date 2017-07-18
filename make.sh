@@ -11,8 +11,6 @@ brew install wget
 brew install getantibody/tap/antibody
 
 # ZSH
-chsh -s $(which zsh)
-
 ln -svf $path/zsh/zshenv ~/.zshenv
 ln -svf $path/zsh/zshrc ~/.zshrc
 ln -svf $path/zsh/aliases.zsh ~/.aliases
