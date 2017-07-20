@@ -11,6 +11,10 @@
   set tabstop=2 shiftwidth=2 expandtab
   set conceallevel=0
 
+" Font settings
+  set encoding=utf8
+  set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11
+
 " Hide abandoned buffers
   set hid
 
