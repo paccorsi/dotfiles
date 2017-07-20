@@ -45,10 +45,11 @@ bindkey '\e\e[D' backward-word
 
 # Completion
 fpath=(~/.completions $fpath)
-setopt complete_aliases
 autoload -U compinit
 compinit
 compctl -g '~/.teamocil/*(:t:r)' kickstart
 
 # History
 bindkey -M isearch . self-insert # history search fix
+
+[ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
