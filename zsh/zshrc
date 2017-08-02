@@ -24,6 +24,9 @@ custom_git_prompt() {
 
 source $ZSH/oh-my-zsh.sh
 
+export VISUAL=nvim
+export EDITOR="$VISUAL"
+
 # Include exports
 [[ -f ~/.exports ]] && source ~/.exports
 # Include aliases
@@ -36,6 +39,7 @@ source $ZSH/oh-my-zsh.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+set rtp+=/usr/local/opt/fzf
 
 # Key bindings
 bindkey -e

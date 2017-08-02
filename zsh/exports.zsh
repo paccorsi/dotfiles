@@ -6,6 +6,7 @@ export HADOOP_CONF_DIR=$HADOOP_HOME/libexec/etc/hadoop
 
 export PYTHONSTARTUP=$HOME/startup.py
 
+export PATH=/usr/local/sbin:$PATH
 export PATH=$HADOOP_PATH/bin:$PATH
 export PATH=~/anaconda/bin:$PATH
 export PATH=~/Documents/scripts:$PATH
