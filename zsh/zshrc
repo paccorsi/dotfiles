@@ -59,6 +59,9 @@ SPACESHIP_PROMPT_ORDER=(
   pyenv
 )
 
+export VISUAL=nvim
+export EDITOR="$VISUAL"
+
 # Include exports
 [[ -f ~/.exports ]] && source ~/.exports
 # Include aliases
@@ -71,6 +74,7 @@ SPACESHIP_PROMPT_ORDER=(
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+set rtp+=/usr/local/opt/fzf
 
 # Key bindings
 bindkey -e
