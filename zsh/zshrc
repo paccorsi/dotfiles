@@ -1,28 +1,63 @@
-export ZSH=~/.oh-my-zsh
-
+source /usr/local/share/antigen/antigen.zsh
+# Theme
 export TERM="xterm-256color"
-ZSH_THEME="bullet-train"
-DISABLE_AUTO_UPDATE="true"
-COMPLETION_WAITING_DOTS="true"
 
-plugins=(
-    git github git-extras zsh-syntax-highlighting vagrant virtualenv
-    pip python brew osx bundler cabal docker gem httpie knife macports
-    npm pep8 pyenv rails ruby sbt scala ssh-agent
+antigen use oh-my-zsh
+antigen theme https://github.com/denysdovhan/spaceship-zsh-theme spaceship
+antigen bundle <<EOBUNDLES
+  git
+  github
+  git-extras
+  vagrant
+  virtualenv
+  pip
+  python
+  brew
+  osx
+  bundler
+  cabal
+  docker
+  gem
+  httpie
+  knife
+  macports
+  npm
+  pep8
+  pyenv
+  rails
+  ruby
+  sbt
+  scala
+  ssh-agent
+  iam4x/zsh-iterm-touchbar
+  b4b4r07/enhancd
+  djui/alias-tips
+  Tarrasch/zsh-bd
+  zsh-users/zsh-completions
+  zsh-users/zsh-autosuggestions
+  zdharma/fast-syntax-highlighting
+EOBUNDLES
+antigen apply
+
+ZSH_THEME="spaceship"
+
+SPACESHIP_PROMPT_ORDER=(
+  time     #
+  vi_mode  # these sections will be
+  user     # before prompt char
+  host     #
+  char
+  dir
+  git
+  node
+  ruby
+  xcode
+  swift
+  golang
+  docker
+  venv
+  pyenv
 )
-
-BULLETTRAIN_PROMPT_ORDER=(git dir)
-
-BULLETTRAIN_GIT_PROMPT_CMD="\$(custom_git_prompt)"
-
-custom_git_prompt() {
-    prompt=$(git_prompt_info)
-    prompt=${prompt//\//\ \ }
-    prompt=${prompt//_/\ }
-    echo ${prompt}
-}
-
-source $ZSH/oh-my-zsh.sh
 
 # Include exports
 [[ -f ~/.exports ]] && source ~/.exports
@@ -48,7 +83,6 @@ fpath=(~/.completions $fpath)
 setopt complete_aliases
 autoload -U compinit
 compinit
-compctl -g '~/.teamocil/*(:t:r)' kickstart
 
 # History
 bindkey -M isearch . self-insert # history search fix

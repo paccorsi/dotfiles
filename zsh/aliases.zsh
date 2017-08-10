@@ -12,6 +12,7 @@ alias gs="git status"
 alias gpl="git pull"
 alias gstop="gco origin/master -- "
 alias gD="git diff HEAD~1 HEAD"
+alias gd="git diff"
 
 function gCP () {
     git add --all

@@ -8,7 +8,8 @@ brew install neovim
 brew install zsh zsh-completions
 brew install fzf
 brew install wget
-brew install getantibody/tap/antibody
+brew install antigen 
+brew install ag
 
 # ZSH
 ln -svf $path/zsh/zshenv ~/.zshenv
@@ -31,3 +32,8 @@ ln -svf $path/psqlrc ~/.psqlrc
 
 # Additional scripts
 ln -svf $path/startup.py ~/startup.py
+
+# Antigen
+antibody bundle <"$path/bundles.txt" > ~/.zsh_plugins
+antibody update
+
