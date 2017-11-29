@@ -3,6 +3,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
+alias p="pygmentize"
 
 # Git
 alias gclean='git branch -d `git branch --merged | grep -v "^*" | tr -d "\n"`'
@@ -13,6 +14,12 @@ alias gpl="git pull"
 alias gstop="gco origin/master -- "
 alias gD="git diff HEAD~1 HEAD"
 alias gd="git diff"
+alias gco="git checkout"
+alias gcm="git checkout master"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gf="git fetch"
 
 function gCP () {
     git add --all
@@ -21,8 +28,7 @@ function gCP () {
 }
 
 function gC () {
-    git add --all
-    git commit --amend -C HEAD
+    git commit --amend --no-edit
     git push origin +HEAD
 }
 
@@ -32,7 +38,8 @@ alias pbpaste='xclip -selection clipboard -o'
 
 # Unix
 alias cd..="cd .."
-alias la="ls -la"
+alias l="exa"
+alias la="exa -bghHliS"
 alias ln="ln -v"
 alias mkdir="mkdir -p"
 alias e="$EDITOR"
@@ -42,13 +49,6 @@ alias dirdus"=du -sckx * | sort -nr" # directories sorted by size
 alias dus="du -kx | sort -nr | less" # files sorted by size
 alias path='echo $PATH | tr -s ":" "\n"' # Pretty print the path
 
-# Bundler
-alias b="bundle"
-alias be="bundle exec"
+# Python
+alias t="py.test" 
 
-# Rails
-alias migrate="rake db:migrate db:rollback && rake db:migrate db:test:prepare"
-alias s="rspec"
-
-# Misc
-alias cask="brew cask"

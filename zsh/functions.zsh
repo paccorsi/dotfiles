@@ -1,3 +1,7 @@
+antibody_install() {
+  antibody bundle < bundles.txt > .antibody_bundles.txt
+}
+
 # -------------------------------------------------------------------
 # compressed file expander
 # (from https://github.com/myfreeweb/zshuery/blob/master/zshuery.sh)
@@ -34,45 +38,9 @@ psax() {
   ps auxwwwh | grep "$@" | grep -v grep
 }
 
-# console
-script_console() {
-    if [ -f config/environment.rb ] && which pry >/dev/null; then
-        pry -r./config/environment.rb
-    elif [ -x script/rails ]; then
-        script/rails console
-    elif [ -x script/console ]; then
-        script/console
-    elif [ -f app.rb ]; then
-        local repl=$(which pry >/dev/null && echo pry || echo irb)
-        local args=$([ -n "$BUNDLE_GEMFILE" -o -f Gemfile ] && echo "-rbundler/setup")
-        $repl $args -I. -r./app.rb
-    else
-        echo "no script/rails or script/console found" >&2
-        return 1
-    fi
- }
-
-# server
-script_server() {
-    if [ -x script/rails ]; then
-        script/rails server "$@"
-    elif [ -x script/server ]; then
-        script/server "$@"
-    else
-        echo "no script/rails or script/server found" >&2
-        return 1
-    fi
-}
-
 # Reset audio
 audioreset() {
     ps aux | grep coreaudio[d] | awk '{print $2}' | xargs sudo kill
-}
-
-# Open gem inside vim
-bo() {
-    local gem_path=`bundle show "$1"`
-    vim +":cd $gem_path"
 }
 
 # Make directory and change into it.
@@ -91,10 +59,7 @@ change_extension() {
 update() {
     (brew update && brew doctor && brew upgrade)
     brew list > ~/.brew_list
-    pip2 install -U $(pip2 list --outdated | awk '{printf $1" "}')
-    pip3 install -U $(pip3 list --outdated | awk '{printf $1" "}')
-    gem update
-    (cd ~/.oh-my-zsh && git checkout master && git pull)
+    antibody update
 }
 
 # make a backup of a file
@@ -121,11 +86,6 @@ lscolors() {
     done
 }
 
-# urlencode text
-urlencode() {
-    ruby -r cgi -e 'puts CGI.escape(ARGV[0])' "$1"
-}
-
 # get public ip
 myip() {
     local api
@@ -142,11 +102,6 @@ myip() {
     esac
     curl -s "$api"
     echo
-}
-
-# open a web browser on google for a query
-google() {
-    xdg-open "https://www.google.com/search?q=`urlencode "${(j: :)@}"`"
 }
 
 # print a separator banner, as wide as the terminal
@@ -219,3 +174,35 @@ fshow() {
                     {}
 FZF-EOF"
 }
+
+
+git-pylint() {
+  local new_files modified_files
+  new_files=$(git status | grep 'new file:' | grep -e '.py$' | awk '{print $3}')
+  modified_files=$(git status | grep 'modified:' | grep -e '.py$' | awk '{print $2}')
+
+  if [[ -z $modified_files ]] && [[ -z $new_files ]]; then
+    echo "No modified or new files found"
+  fi
+
+  for file in $modified_files $new_files 
+  do
+    pylint "${file}"
+  done
+}
+
+git-pytest() {
+  local new_files modified_files
+  new_files=$(git status | grep 'new file:' | grep -e '^test_.*.py$' | awk '{print $3}')
+  modified_files=$(git status | grep 'modified:' | grep -e 'test_.*.py$' | awk '{print $2}')
+
+  if [[ -z $modified_files ]] && [[ -z $new_files ]]; then
+    echo "No modified or new files found"
+  fi
+
+  for file in $modified_files $new_files
+  do
+    pytest "${file}"
+  done
+}
+
