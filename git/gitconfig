@@ -1,14 +1,16 @@
 [color]
-  ui = true
+	ui = true
 [color "branch"]
   current = yellow reverse
   local = yellow
   remote = green
 [color "diff"]
-  meta = yellow bold
-  frag = magenta bold
-  old = red
-  new = green
+	meta = 227
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	commit = 227 bold
+	whitespace = red reverse
 [alias]
   # add
   a = add                           # add
@@ -111,6 +113,7 @@
   autocrlf = false
   editor = vim
   excludesfile = ~/.gitignore
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [advice]
   statusHints = false
 [diff]
@@ -134,3 +137,8 @@
 	required = true
 [credential]
 	helper = osxkeychain
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
