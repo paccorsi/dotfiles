@@ -1,4 +1,5 @@
 let mapleader = '-'
+inoremap <c-f> <c-x><c-f>
 
 set hlsearch
 set scrolloff=3
@@ -171,3 +172,6 @@ nnoremap <CR> :action Resume<CR>
 " templates
 inoremap <C-k> <C-o>:action NextTemplateVariable<CR>
 inoremap <C-j> <C-o>:action PreviousTemplateVariable<CR>
+
+" alternate
+nnoremap <leader>a :action alternate_file<CR>
