@@ -33,6 +33,7 @@ function gC () {
 }
 
 # Mac
+alias cask="brew cask"
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 

@@ -13,14 +13,11 @@ export EDITOR="$VISUAL"
 [[ -f ~/.functions ]] && source ~/.functions
 # Include secrets
 [[ -f ~/.secrets ]] && source ~/.secrets
-# Include fuzzy matching
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='ag -g ""'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-set rtp+=/usr/local/opt/fzf
 
 # Key bindings
 bindkey -e
+bindkey -v
+bindkey -v '^?' backward-delete-char
 bindkey '^D'  delete-char
 bindkey '\e\e[C' forward-word
 bindkey '\e\e[D' backward-word
@@ -49,5 +46,11 @@ function install_powerline_precmd() {
 if [ "$TERM" != "linux" ]; then
     install_powerline_precmd
 fi
+
+# Include fuzzy matching
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+set rtp+=/usr/local/opt/fzf
 
 [ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
