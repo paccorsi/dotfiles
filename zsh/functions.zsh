@@ -140,6 +140,26 @@ fbr() {
     git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
+# Fixup commit
+gfix() {
+  local fzf=(
+		fzf
+		--ansi
+		--reverse
+		--tiebreak=index
+		--no-sort
+		--bind=ctrl-s:toggle-sort
+		--preview 'f() { set -- $(echo -- "$@" | grep -o "[a-f0-9]\{7\}"); [ $# -eq 0 ] || git show --color=always $1; }; f {}'
+  )
+  local commit=$(
+    git cherry -v master | $fzf | awk '{print $2}'
+  )
+  if [[! -z "$local" ]]; then
+    git commit --fixup=${commit}
+    git rebase --interactive --autosquash ${commit}^
+  fi
+}
+
 # fco - checkout git branch/tag
 fco() {
     local tags branches target
@@ -163,16 +183,26 @@ fcoc() {
     git checkout $(echo "$commit" | sed "s/ .*//")
 }
 
-# fshow - git commit browser
-fshow() {
-    git log --graph --color=always \
-            --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
-    fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
-        --bind "ctrl-m:execute:
-                    (grep -o '[a-f0-9]\{7\}' | head -1 |
-                    xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
-                    {}
-FZF-EOF"
+# gl- git commit browser
+gl() {
+  local g=(
+		git log
+		--graph
+		--format='%C(auto)%h%d %s %C(white)%C(bold)%cr'
+		--color=always
+		"$@"
+	)
+
+	local fzf=(
+		fzf
+		--ansi
+		--reverse
+		--tiebreak=index
+		--no-sort
+		--bind=ctrl-s:toggle-sort
+		--preview 'f() { set -- $(echo -- "$@" | grep -o "[a-f0-9]\{7\}"); [ $# -eq 0 ] || git show --color=always $1; }; f {}'
+	)
+	$g | $fzf
 }
 
 
