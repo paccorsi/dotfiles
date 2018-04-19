@@ -2,9 +2,6 @@ export PYENV_ROOT=~/.pyenv
 export JAVA_HOME=$(/usr/libexec/java_home)
 export GOBIN=$HOME/go/bin
 export GOPATH=$HOME/go
-export HADOOP_HOME=/usr/local/Cellar/hadoop/2.7.2
-export HADOOP_CONF_DIR=$HADOOP_HOME/libexec/etc/hadoop
-
 
 export PYTHONSTARTUP=$HOME/startup.py
 
