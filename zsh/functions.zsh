@@ -57,8 +57,9 @@ change_extension() {
 
 # Update all the things
 update() {
-    (brew update && brew doctor && brew upgrade)
-    brew list > ~/.brew_list
+    brew update
+    brew upgrade
+    brew list > ~/.Brewfile
     antibody update
 }
 
@@ -236,3 +237,11 @@ git-pytest() {
   done
 }
 
+docker-clean() {
+  # Stop all containers
+  docker stop $(sudo docker ps -a -q)
+  # Delete all containers
+  docker rm $(sudo docker ps -a -q)
+  # Delete all images
+  docker rmi $(sudo docker images -q)
+}

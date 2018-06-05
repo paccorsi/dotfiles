@@ -6,6 +6,8 @@ alias .....='cd ../../../..'
 alias p="pygmentize"
 
 # Git
+alias ga.="git add ."
+alias gb="git branch"
 alias gclean='git branch -d `git branch --merged | grep -v "^*" | tr -d "\n"`'
 alias gr="git rebase"
 alias grm="git rebase master"

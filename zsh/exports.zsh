@@ -1,7 +1,7 @@
 export PYENV_ROOT=~/.pyenv
 export JAVA_HOME=$(/usr/libexec/java_home)
 export GOBIN=$HOME/go/bin
-export GOPATH=$HOME/go
+export GOPATH=$HOME
 
 export PYTHONSTARTUP=$HOME/startup.py
 
