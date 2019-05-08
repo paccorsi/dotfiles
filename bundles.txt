@@ -1,0 +1,13 @@
+# Zsh
+zsh-users/zsh-completions
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-history-substring-search
+zsh-users/zsh-autosuggestions
+
+# Github
+git://github.com/peterhurford/git-it-on.zsh
+
+mafredri/zsh-async
+djui/alias-tips
+Tarrasch/zsh-bd
+sindresorhus/pure
