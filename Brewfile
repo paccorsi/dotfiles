@@ -3,6 +3,8 @@ tap "caskroom/fonts"
 tap "getantibody/tap"
 tap "homebrew/bundle"
 tap "homebrew/core"
+tap "shopify/shopify"
+
 brew "wget"
 brew "fzf"
 brew "git"
@@ -29,130 +31,127 @@ cask "google-chrome"
 cask "slack"
 cask "vlc"
 
-ammonite-repl
-antibody
-argo
-autoconf
-automake
-bat
-bison
-black
-c-ares
-cmake
-coreutils
-curl
-dep
-diff-so-fancy
-docker
-docker-compose
-docker-machine
-docker-machine-driver-hyperkit
-docker-machine-driver-xhyve
-ejson
-exa
-exiftool
-fd
-fontconfig
-fortune
-freetype
-fzf
-gcc
-gd
-gdbm
-gdrive
-geoip
-gettext
-gflags
-ghostscript
-git
-gmp
-go
-graphviz
-grpc
-hadoop
-htop
-httpie
-icu4c
-isl
-jemalloc
-jpeg
-jq
-kubernetes-cli
-libev
-libevent
-libffi
-libidn2
-libmemcached
-libmpc
-libpng
-librdkafka
-libssh2
-libtermkey
-libtiff
-libtool
-libunistring
-libuv
-libvterm
-libxml2
-libyaml
-little-cms2
-luajit
-lz4
-lzlib
-makedepend
-maven
-memcached
-mpfr
-msgpack
-mysql
-ncdu
-ncurses
-neovim
-node
-oauth-tunnel-client
-oniguruma
-openssl
-openssl@1.1
-p7zip
-pcre
-pcre2
-pipenv
-pkg-config
-postgresql
-presto-cli
-presto-jdbc
-prettyping
-protobuf
-protobuf@2.5
-prototool
-pstree
-pyenv
-pyenv-virtualenv
-python
-python3
-python@2
-readline
-ripgrep
-ruby
-ruby-install
-sbt
-scala
-secret-sender
-shellcheck
-snappy
-sqlite
-swig
-the_silver_searcher
-tree
-unibilium
-watchman
-webp
-wget
-wine
-xhyve
-xz
-zeromq
-zlib
-zsh
-zsh-completions
-zstd
+brew "ammonite-repl"
+brew "antibody"
+brew "argo"
+brew "autoconf"
+brew "automake"
+brew "bat"
+brew "bison"
+brew "black"
+brew "c-ares"
+brew "cmake"
+brew "coreutils"
+brew "curl"
+brew "dep"
+brew "diff-so-fancy"
+brew "docker"
+brew "docker-compose"
+brew "docker-machine"
+brew "docker-machine-driver-hyperkit"
+brew "docker-machine-driver-xhyve"
+brew "ejson"
+brew "exa"
+brew "exiftool"
+brew "fd"
+brew "fontconfig"
+brew "fortune"
+brew "freetype"
+brew "fzf"
+brew "gcc"
+brew "gd"
+brew "gdbm"
+brew "gdrive"
+brew "geoip"
+brew "gettext"
+brew "gflags"
+brew "ghostscript"
+brew "git"
+brew "gmp"
+brew "go"
+brew "graphviz"
+brew "grpc"
+brew "hadoop"
+brew "htop"
+brew "httpie"
+brew "icu4c"
+brew "isl"
+brew "jemalloc"
+brew "jpeg"
+brew "jq"
+brew "kubernetes-cli"
+brew "libev"
+brew "libevent"
+brew "libffi"
+brew "libidn2"
+brew "libmemcached"
+brew "libmpc"
+brew "libpng"
+brew "librdkafka"
+brew "libssh2"
+brew "libtermkey"
+brew "libtiff"
+brew "libtool"
+brew "libunistring"
+brew "libuv"
+brew "libvterm"
+brew "libxml2"
+brew "libyaml"
+brew "little-cms2"
+brew "luajit"
+brew "lz4"
+brew "lzlib"
+brew "makedepend"
+brew "maven"
+brew "memcached"
+brew "mpfr"
+brew "msgpack"
+brew "mysql"
+brew "ncdu"
+brew "ncurses"
+brew "neovim"
+brew "node"
+brew "oauth-tunnel-client"
+brew "oniguruma"
+brew "openssl"
+brew "p7zip"
+brew "pcre"
+brew "pcre2"
+brew "pipenv"
+brew "pkg-config"
+brew "postgresql"
+brew "presto-cli"
+brew "presto-jdbc"
+brew "prettyping"
+brew "protobuf"
+brew "prototool"
+brew "pstree"
+brew "pyenv"
+brew "pyenv-virtualenv"
+brew "python"
+brew "python3"
+brew "readline"
+brew "ripgrep"
+brew "ruby"
+brew "ruby-install"
+brew "sbt"
+brew "scala"
+brew "secret-sender"
+brew "shellcheck"
+brew "snappy"
+brew "sqlite"
+brew "swig"
+brew "the_silver_searcher"
+brew "tree"
+brew "unibilium"
+brew "watchman"
+brew "webp"
+brew "wget"
+brew "wine"
+brew "xhyve"
+brew "xz"
+brew "zeromq"
+brew "zlib"
+brew "zsh"
+brew "zsh-completions"
+brew "zstd"

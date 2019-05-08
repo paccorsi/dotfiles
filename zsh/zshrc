@@ -1,6 +1,6 @@
 export TERM="xterm-256color"
 
-source ~/.antibody_bundles.txt
+source ~/.zsh_plugins
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"

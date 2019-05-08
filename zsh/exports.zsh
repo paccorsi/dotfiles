@@ -5,6 +5,7 @@ export GOPATH=$HOME
 
 export PYTHONSTARTUP=$HOME/startup.py
 
+export PATH="/usr/local/bin:$PATH"
 export PATH=/usr/local/sbin:$PATH
 export PATH=$HADOOP_PATH/bin:$PATH
 export PATH=~/Documents/scripts:$PATH
@@ -12,4 +13,3 @@ export PATH=$GOBIN:$PATH
 export PATH=/usr/local/opt/scala/idea:$PATH
 export PATH=$PYENV_ROOT/bin:$PATH
 export PATH=~/.cargo/bin:$PATH
-eval "$(pyenv init -)"
