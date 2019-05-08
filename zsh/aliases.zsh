@@ -6,6 +6,7 @@ alias .....='cd ../../../..'
 alias p="pygmentize"
 
 # Git
+alias gamend="git commit --amend --no-edit"
 alias ga.="git add ."
 alias gb="git branch"
 alias gclean='git branch -d `git branch --merged | grep -v "^*" | tr -d "\n"`'
@@ -53,5 +54,5 @@ alias dus="du -kx | sort -nr | less" # files sorted by size
 alias path='echo $PATH | tr -s ":" "\n"' # Pretty print the path
 
 # Python
-alias t="py.test" 
+alias t="py.test -vv" 
 

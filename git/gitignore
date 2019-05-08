@@ -42,7 +42,10 @@ Session.vim
 .secrets.sh
 .secrets.zsh
 .idea/*
+.vscode/*
 
 # SASS
 # ----------------------------------------------------------------------------------------------
 .sass-cache
+
+.mypy_cache/
