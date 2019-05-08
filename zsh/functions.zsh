@@ -2,11 +2,19 @@ antibody_install() {
   antibody bundle < bundles.txt > .antibody_bundles.txt
 }
 
+pdf-rename() {
+  exiftool exiftool "-filename<\${createdate} - \${author;} - \${title;}.%e" -d "%Y" "$@"
+}
+
+pip-update() {
+  pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
+}
+
 # -------------------------------------------------------------------
 # compressed file expander
 # (from https://github.com/myfreeweb/zshuery/blob/master/zshuery.sh)
 # -------------------------------------------------------------------
-ex() {
+extract() {
     if [[ -f $1 ]]; then
         case $1 in
           *.tar.bz2) tar xvjf $1;;
@@ -57,6 +65,7 @@ change_extension() {
 
 # Update all the things
 update() {
+    brew cleanup
     brew update
     brew upgrade
     brew list > ~/.Brewfile
@@ -111,7 +120,12 @@ hr() {
 }
 
 tar_dir() {
-    tar -zcvf $1.tar.gz $1
+    tar \
+      --exclude='./.git' \
+      --exclude='./.mypy_cache' \
+      --exclude='./.idea' \
+      --exclude='./.cache' \
+      -zcvf $1.tar.gz $1
 }
 
 decrypt() {
@@ -144,18 +158,16 @@ fbr() {
 # Fixup commit
 gfix() {
   local fzf=(
-		fzf
-		--ansi
-		--reverse
-		--tiebreak=index
-		--no-sort
-		--bind=ctrl-s:toggle-sort
+		fzf \
+		--ansi \
+		--reverse \
+		--tiebreak=index \
+		--no-sort \
+		--bind=ctrl-s:toggle-sort \
 		--preview 'f() { set -- $(echo -- "$@" | grep -o "[a-f0-9]\{7\}"); [ $# -eq 0 ] || git show --color=always $1; }; f {}'
   )
-  local commit=$(
-    git cherry -v master | $fzf | awk '{print $2}'
-  )
-  if [[! -z "$local" ]]; then
+  local commit=$(git cherry -v master | $fzf | awk '{print $2}')
+  if [[ ! -z "$commit" ]]; then
     git commit --fixup=${commit}
     git rebase --interactive --autosquash ${commit}^
   fi
@@ -206,6 +218,9 @@ gl() {
 	$g | $fzf
 }
 
+git-clean-branches() {
+  git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d
+}
 
 git-pylint() {
   local new_files modified_files
@@ -222,7 +237,8 @@ git-pylint() {
   done
 }
 
-git-pytest() {
+# Run pytest on changed files
+gst() {
   local new_files modified_files
   new_files=$(git status | grep 'new file:' | grep -e '^test_.*.py$' | awk '{print $3}')
   modified_files=$(git status | grep 'modified:' | grep -e 'test_.*.py$' | awk '{print $2}')

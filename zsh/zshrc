@@ -5,6 +5,13 @@ source ~/.antibody_bundles.txt
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
+# History size
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+export HISTFILE=~/.zhistory
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+
 # Include exports
 [[ -f ~/.exports ]] && source ~/.exports
 # Include aliases
