@@ -74,7 +74,9 @@ update() {
 
 # make a backup of a file
 bk() {
-    cp -a "$1" "${1}_$(date +%s)"
+    local backup_name="${1}_$(date +%s)"
+    echo "Backup: ${backup_name}"
+    cp -a "$1" "${backup_name}"
 }
 
 # get the content type of an http resource
@@ -260,4 +262,34 @@ docker-clean() {
   docker rm $(sudo docker ps -a -q)
   # Delete all images
   docker rmi $(sudo docker images -q)
+}
+
+# Change gcloud project
+function gcloud-project() {
+  local current_project=$(gcloud config list project --format "value(core.project)")
+  echo "Current project: ${current_project}"
+  if ! type gcloud &>/dev/null; then
+    echo "gcloud not found" >&2
+    return 1
+  fi
+  local proj=$(gcloud projects list | fzf --height 50% --header-lines=1 --reverse --multi --cycle | awk '{print $1}')
+  if [[ -n $proj ]]; then
+    gcloud config set project $proj
+    return $?
+  fi
+}
+
+# Change kubernetes context
+function kube-context() {
+  local current_context=$(kubectl config current-context)
+  echo "Current context: ${current_context}"
+  if ! type kubectl &>/dev/null; then
+    echo "kubectl not found" >&2
+    return 1
+  fi
+  local context=$(kubectl config get-contexts | fzf --height 50% --header-lines=1 --reverse --multi --cycle | awk '{print $1}')
+  if [[ -n $context ]]; then
+    kubectl config use-context $context
+    return $?
+  fi
 }

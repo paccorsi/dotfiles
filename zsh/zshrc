@@ -38,7 +38,7 @@ bindkey -M isearch . self-insert # history search fix
 
 # Powerline
 function powerline_precmd() {
-    PS1="$(~/go/bin/powerline-go -error $? -shell zsh)"
+    PS1="$(~/go/bin/powerline-go -error $? -shell zsh -modules "nix-shell,venv,cwd,perms,git,jobs,exit,root,vgo")"
 }
 
 function install_powerline_precmd() {
