@@ -17,12 +17,16 @@ alias gstop="gco origin/master -- "
 alias gD="git diff HEAD~1 HEAD"
 alias gd="git diff"
 alias gco="git checkout"
-alias gcm="git checkout master"
 alias ga="git add"
 alias gc="git commit"
 alias gp="git push"
 alias gpn="git push --no-verify"
 alias gf="git fetch"
+
+function gcm () {
+  local main=$(basename $(git symbolic-ref --short refs/remotes/origin/HEAD))
+  git checkout "$main"
+}
 
 function gcp () {
   git add --all

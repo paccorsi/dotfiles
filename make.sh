@@ -6,6 +6,8 @@ path="$(pwd)"
 brew update
 brew bundle
 
+go get -u github.com/justjanne/powerline-go
+
 # ZSH
 ln -svf "$path/zsh/zshenv" ~/.zshenv
 ln -svf "$path/zsh/zshrc" ~/.zshrc
