@@ -35,3 +35,5 @@ ln -svf "$path/startup.py" ~/startup.py
 antibody bundle <"$path/bundles.txt" > ~/.zsh_plugins
 antibody update
 
+# Apps
+ln -svf "$path/apps/karabiner.json" ~/.config/karabiner/karabiner.json
