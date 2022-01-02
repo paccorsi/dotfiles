@@ -36,4 +36,5 @@ antibody bundle <"$path/bundles.txt" > ~/.zsh_plugins
 antibody update
 
 # Apps
+mkdir -p ~/.config/karabiner
 ln -svf "$path/apps/karabiner.json" ~/.config/karabiner/karabiner.json
