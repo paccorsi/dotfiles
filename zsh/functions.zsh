@@ -1,5 +1,5 @@
-antibody_install() {
-  antibody bundle < bundles.txt > .antibody_bundles.txt
+anti_install() {
+  antibody bundle < bundles.txt > ~/.zsh_plugins
 }
 
 pdf-rename() {
@@ -69,7 +69,7 @@ update() {
     brew update
     brew upgrade
     brew list > ~/.Brewfile
-    antibody update
+    antidote update
 }
 
 # make a backup of a file
@@ -233,7 +233,7 @@ git-pylint() {
     echo "No modified or new files found"
   fi
 
-  for file in $modified_files $new_files 
+  for file in $modified_files $new_files
   do
     pylint "${file}"
   done

@@ -6,7 +6,11 @@ path="$(pwd)"
 brew update
 brew bundle
 
+# Shell prompt
 go get -u github.com/justjanne/powerline-go
+
+# To install useful key bindings and fuzzy completion:
+$(brew --prefix)/opt/fzf/install
 
 # ZSH
 ln -svf "$path/zsh/zshenv" ~/.zshenv
@@ -31,9 +35,9 @@ ln -svf "$path/psqlrc" ~/.psqlrc
 # Additional scripts
 ln -svf "$path/startup.py" ~/startup.py
 
-# Antigen
-antibody bundle <"$path/bundles.txt" > ~/.zsh_plugins
-antibody update
+# Antidote
+antidote bundle <"$path/bundles.txt" > ~/.zsh_plugins
+antidote update
 
 # Apps
 mkdir -p ~/.config/karabiner

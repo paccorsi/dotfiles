@@ -143,3 +143,5 @@
 	newHighlight = green bold 22
 [protocol]
 	version = 2
+[credential]
+	helper = osxkeychain

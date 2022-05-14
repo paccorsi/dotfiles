@@ -53,9 +53,10 @@ alias pbpaste='xclip -selection clipboard -o'
 
 # Unix
 alias cd..="cd .."
-alias l="exa"
+alias l="exa --header --git --icons --oneline"
+alias la="exa --long --header  --git --icons --time-style=long-iso --all"
+alias ll="exa --long --header  --git --icons --time-style=long-iso"
 alias tree="exa --tree"
-alias la="exa --long --header --time-style=long-iso"
 alias ln="ln -v"
 alias mkdir="mkdir -p"
 alias e="$EDITOR"
@@ -65,5 +66,4 @@ alias dus="du -kx | sort -nr | less" # files sorted by size
 alias path='echo $PATH | tr -s ":" "\n"' # Pretty print the path
 
 # Python
-alias t="py.test -vv" 
-
+alias t="py.test -vv"

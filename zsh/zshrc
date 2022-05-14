@@ -1,5 +1,7 @@
 export TERM="xterm-256color"
 
+# Antidote ZSH plugins
+source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
 source ~/.zsh_plugins
 
 export VISUAL=nvim
@@ -54,28 +56,11 @@ if [ "$TERM" != "linux" ]; then
     install_powerline_precmd
 fi
 
-# Include fuzzy matching
+# Include FZF fuzzy matching
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='ag -g ""'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore--hidden'
+export FZF_CTRL_T_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*" --glob "!node_modules/*" --glob "!vendor/*" 2> /dev/null'
 set rtp+=/usr/local/opt/fzf
 
-export CLOUDSDK_PYTHON=python3
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/usr/local/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/usr/local/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
-        . "/usr/local/Caskroom/miniconda/base/etc/profile.d/conda.sh"
-    else
-        export PATH="/usr/local/Caskroom/miniconda/base/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
+# Start devbuddy https://github.com/devbuddy/devbuddy
+eval "$(bud --shell-init --with-completion)"

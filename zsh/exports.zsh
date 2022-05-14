@@ -1,3 +1,7 @@
+# Color ls output for dark backgrounds
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
+
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 export PYENV_ROOT=~/.pyenv
