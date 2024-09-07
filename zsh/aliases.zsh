@@ -5,12 +5,17 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
 # Git
+function default_branch_name() {
+  git show-ref -q --heads main && echo main || echo master
+}
+
 alias gamend="git commit --amend --no-edit"
 alias ga.="git add ."
 alias gb="git branch"
 alias gclean='git branch -d `git branch --merged | grep -v "^*" | tr -d "\n"`'
+alias gcm='git checkout $(default_branch_name)'
 alias gr="git rebase"
-alias grm="git rebase master"
+alias grm='git rebase $(default_branch_name)'
 alias gs="git status"
 alias gpl="git pull"
 alias gstop="gco origin/master -- "
@@ -22,11 +27,6 @@ alias gc="git commit"
 alias gp="git push"
 alias gpn="git push --no-verify"
 alias gf="git fetch"
-
-function gcm () {
-  local main=$(basename $(git symbolic-ref --short refs/remotes/origin/HEAD))
-  git checkout "$main"
-}
 
 function gcp () {
   git add --all
