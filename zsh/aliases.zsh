@@ -53,10 +53,10 @@ alias pbpaste='xclip -selection clipboard -o'
 
 # Unix
 alias cd..="cd .."
-alias l="exa --header --git --icons --oneline"
-alias la="exa --long --header  --git --icons --time-style=long-iso --all"
-alias ll="exa --long --header  --git --icons --time-style=long-iso"
-alias tree="exa --tree"
+alias l="eza --header --git --icons --oneline"
+alias la="eza --long --header  --git --icons --time-style=long-iso --all"
+alias ll="eza --long --header  --git --icons --time-style=long-iso"
+alias tree="eza --tree"
 alias ln="ln -v"
 alias mkdir="mkdir -p"
 alias e="$EDITOR"
