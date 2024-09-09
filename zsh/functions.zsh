@@ -1,213 +1,188 @@
-anti_install() {
-  antibody bundle < bundles.txt > ~/.zsh_plugins
-}
-
-pdf-rename() {
-  exiftool exiftool "-filename<\${createdate} - \${author;} - \${title;}.%e" -d "%Y" "$@"
-}
-
+# Update all Python packages installed in a virtual environment.
 pip-update() {
-  pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
+	pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U
 }
 
-# -------------------------------------------------------------------
-# compressed file expander
-# (from https://github.com/myfreeweb/zshuery/blob/master/zshuery.sh)
-# -------------------------------------------------------------------
+# Extract compressed file
+# From https://github.com/xvoland/Extract/blob/master/extract.sh
 extract() {
-    if [[ -f $1 ]]; then
-        case $1 in
-          *.tar.bz2) tar xvjf $1;;
-          *.tar.gz) tar xvzf $1;;
-          *.tar.xz) tar xvJf $1;;
-          *.tar.lzma) tar --lzma xvf $1;;
-          *.bz2) bunzip $1;;
-          *.rar) unrar $1;;
-          *.gz) gunzip $1;;
-          *.tar) tar xvf $1;;
-          *.tbz2) tar xvjf $1;;
-          *.tgz) tar xvzf $1;;
-          *.zip) unzip $1;;
-          *.Z) uncompress $1;;
-          *.7z) 7z x $1;;
-          *.dmg) hdiutul mount $1;; # mount OS X disk images
-          *) echo "'$1' cannot be extracted via >ex<";;
-    esac
-    else
-        echo "'$1' is not a valid file"
-    fi
+	if [ $# -eq 0 ]; then
+		# display usage if no parameters given
+		echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz|.zlib|.cso|.zst>"
+		echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
+	fi
+	for n in "$@"; do
+		if [ ! -f "$n" ]; then
+			echo "'$n' - file doesn't exist"
+			return 1
+		fi
+
+		case "${n%,}" in
+		*.cbt | *.tar.bz2 | *.tar.gz | *.tar.xz | *.tbz2 | *.tgz | *.txz | *.tar)
+			tar zxvf "$n"
+			;;
+		*.lzma) unlzma ./"$n" ;;
+		*.bz2) bunzip2 ./"$n" ;;
+		*.cbr | *.rar) unrar x -ad ./"$n" ;;
+		*.gz) gunzip ./"$n" ;;
+		*.cbz | *.epub | *.zip) unzip ./"$n" ;;
+		*.z) uncompress ./"$n" ;;
+		*.7z | *.apk | *.arj | *.cab | *.cb7 | *.chm | *.deb | *.iso | *.lzh | *.msi | *.pkg | *.rpm | *.udf | *.wim | *.xar | *.vhd)
+			7z x ./"$n"
+			;;
+		*.xz) unxz ./"$n" ;;
+		*.exe) cabextract ./"$n" ;;
+		*.cpio) cpio -id <./"$n" ;;
+		*.cba | *.ace) unace x ./"$n" ;;
+		*.zpaq) zpaq x ./"$n" ;;
+		*.arc) arc e ./"$n" ;;
+		*.cso) ciso 0 ./"$n" ./"$n.iso" &&
+			extract "$n.iso" && \rm -f "$n" ;;
+		*.zlib) zlib-flate -uncompress <./"$n" >./"$n.tmp" &&
+			mv ./"$n.tmp" ./"${n%.*zlib}" && rm -f "$n" ;;
+		*.dmg)
+			hdiutil mount ./"$n" -mountpoint "./$n.mounted"
+			;;
+		*.tar.zst) tar -I zstd -xvf ./"$n" ;;
+		*.zst) zstd -d ./"$n" ;;
+		*)
+			echo "extract: '$n' - unknown archive method"
+			return 1
+			;;
+		esac
+	done
 }
 
-# --------------------------------------------------------------------
-# ps with a grep
-# from http://hiltmon.com/blog/2013/07/30/quick-process-search/
-# --------------------------------------------------------------------
-psax() {
-  ps auxwwwh | grep "$@" | grep -v grep
-}
-
-# Reset audio
-audioreset() {
-    ps aux | grep coreaudio[d] | awk '{print $2}' | xargs sudo kill
-}
-
-# Make directory and change into it.
-mcd() {
-    mkdir -p "$1" && cd "$1";
-}
-
-# Change file extensions recursively in current directory
-change_extension() {
-    foreach f (**/*.$1)
-        mv $f $f:r.$2
-    end
-}
-
-# Update all the things
+# Update dependencies
 update() {
-    brew cleanup
-    brew update
-    brew upgrade
-    brew list > ~/.Brewfile
-    antidote update
+	title "Updating dependencies"
+	brew cleanup && brew update && brew upgrade
+	title "Updating apps"
+	mas upgrade
+	title "Updating zsh plugins"
+	antidote update
 }
 
-# make a backup of a file
+# Make a backup of a file
 bk() {
-    local backup_name="${1}_$(date +%s)"
-    echo "Backup: ${backup_name}"
-    cp -a "$1" "${backup_name}"
+	if [[ -z $1 ]]; then
+		print "Usage: bk <FILE>"
+		return 1
+	fi
+	local backup_name="${1}_$(date +%s)"
+	echo "Backup: ${backup_name}"
+	cp -a "$1" "${backup_name}"
 }
 
-# get the content type of an http resource
+# Get the content type of an http resource
 htmime() {
-    if [[ -z $1 ]]; then
-        print "USAGE: htmime <URL>"
-        return 1
-    fi
-    mime=$(curl -sIX HEAD $1 | sed -nr "s/Content-Type: (.+)/\1/p")
-    print $mime
+	if [[ -z $1 ]]; then
+		print "Usage: htmime <URL>"
+		return 1
+	fi
+	local mime=$(curl -sIX HEAD $1 | sed -nr "s/Content-Type: (.+)/\1/p")
+	echo "$mime"
 }
 
-# display a list of supported colors
+# Display a list of supported colors
 lscolors() {
-    ((cols = $COLUMNS - 4))
-    s=$(printf %${cols}s)
-    for i in {000..$(tput colors)}; do
-        echo -e $i $(tput setaf $i; tput setab $i)${s// /=}$(tput op);
-    done
+	((cols = $COLUMNS - 4))
+	s=$(printf %${cols}s)
+	for i in {000..$(tput colors)}; do
+		echo -e $i $(
+			tput setaf $i
+			tput setab $i
+		)${s// /=}$(tput op)
+	done
 }
 
-# get public ip
+# Pring public IP
 myip() {
-    local api
-    case "$1" in
-        "-4")
-            api="http://v4.ipv6-test.com/api/myip.php"
-            ;;
-        "-6")
-            api="http://v6.ipv6-test.com/api/myip.php"
-            ;;
-            *)
-            api="http://ipv6-test.com/api/myip.php"
-            ;;
-    esac
-    curl -s "$api"
-    echo
+	curl -s "http://ipv6-test.com/api/myip.php"
+	echo
 }
 
-# print a separator banner, as wide as the terminal
+# Print a separator banner, as wide as the terminal
 hr() {
-    print ${(l:COLUMNS::=:)}
+	print "${(l:COLUMNS::=:)}"
 }
 
-tar_dir() {
-    tar \
-      --exclude='./.git' \
-      --exclude='./.mypy_cache' \
-      --exclude='./.idea' \
-      --exclude='./.cache' \
-      -zcvf $1.tar.gz $1
+# Print a title with banner separators
+title() {
+	hr
+	echo "$1"
+	hr
 }
 
+# Decrypt a file with encrypted with OpenSSL AES-256-CBC
 decrypt() {
-    openssl aes-256-cbc -d -a -in $1 -out $1.new
+	openssl aes-256-cbc -d -a -in $1 -out $1.new
 }
 
+# Encrypt a file with OpenSSL AES-256-CBC
+# Security warning: AES-256-CBC does not provide authenticated encryption
+# and is vulnerable to padding oracle attacks.
 encrypt() {
-    openssl aes-256-cbc -a -salt -in $1 -out $1.enc
+	openssl aes-256-cbc -a -salt -in $1 -out $1.enc
 }
 
-# Prints the weather
+# Prints the weather report
 weather() {
-    if [ -z "$1" ]
-    then
-        curl -s wttr.in/Montreal | head -n 7
-    else
-        curl -s wttr.in/$1 | head -n 7
-    fi
+	if [ -z "$1" ]; then
+		curl -s wttr.in/Montreal | head -n 7
+	else
+		curl -s wttr.in/$1 | head -n 7
+	fi
 }
 
-# fbr - checkout git branch (including remote branches)
-fbr() {
-    local branches branch
-    branches=$(git branch --all | grep -v HEAD) &&
-    branch=$(echo "$branches" |
-           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-    git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
-}
-
-# Fixup commit
-gfix() {
-  local fzf=(
-		fzf \
-		--ansi \
-		--reverse \
-		--tiebreak=index \
-		--no-sort \
-		--bind=ctrl-s:toggle-sort \
-		--preview 'f() { set -- $(echo -- "$@" | grep -o "[a-f0-9]\{7\}"); [ $# -eq 0 ] || git show --color=always $1; }; f {}'
-  )
-  local commit=$(git cherry -v master | $fzf | awk '{print $2}')
-  if [[ ! -z "$commit" ]]; then
-    git commit --fixup=${commit}
-    git rebase --interactive --autosquash ${commit}^
-  fi
-}
-
-# fco - checkout git branch/tag
+# Checkout git branch/tag interactively with FZF
 fco() {
-    local tags branches target
-    tags=$(
-        git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
-    branches=$(
-        git branch --all | grep -v HEAD             |
-        sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
-        sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
-    target=$(
-        (echo "$tags"; echo "$branches") |
-        fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
-    git checkout $(echo "$target" | awk '{print $2}')
+	local tags branches target
+	tags=$(
+		git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}'
+	) || return
+	branches=$(
+		git branch --all | grep -v HEAD |
+			sed "s/.* //" | sed "s#remotes/[^/]*/##" |
+			sort -u | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}'
+	) || return
+	target=$(
+		(
+			echo "$tags"
+			echo "$branches"
+		) |
+			fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2
+	) || return
+	git checkout $(echo "$target" | awk '{print $2}')
 }
 
-# fcoc - checkout git commit
-fcoc() {
-    local commits commit
-    commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
-    commit=$(echo "$commits" | fzf --tac +s +m -e) &&
-    git checkout $(echo "$commit" | sed "s/ .*//")
+# Fixup git commit interactively with FZF
+gfix() {
+	local fzf=(
+		fzf
+		--ansi
+		--reverse
+		--tiebreak=index
+		--no-sort
+		--bind=ctrl-s:toggle-sort
+		--preview 'f() { set -- $(echo -- "$@" | grep -o "[a-f0-9]\{7\}"); [ $# -eq 0 ] || git show --color=always $1; }; f {}'
+	)
+	local commit=$(git cherry -v master | $fzf | awk '{print $2}')
+	if [[ ! -z "$commit" ]]; then
+		git commit --fixup=${commit}
+		git rebase --interactive --autosquash ${commit}^
+	fi
 }
 
-# gl- git commit browser
+# Browse git commit log interactively with FZF
 gl() {
-  local g=(
+	local g=(
 		git log
 		--graph
 		--format='%C(auto)%h%d %s %C(white)%C(bold)%cr'
 		--color=always
 		"$@"
 	)
-
 	local fzf=(
 		fzf
 		--ansi
@@ -220,76 +195,62 @@ gl() {
 	$g | $fzf
 }
 
+# Clean merged branches
 git-clean-branches() {
-  git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d
-}
-
-git-pylint() {
-  local new_files modified_files
-  new_files=$(git status | grep 'new file:' | grep -e '.py$' | awk '{print $3}')
-  modified_files=$(git status | grep 'modified:' | grep -e '.py$' | awk '{print $2}')
-
-  if [[ -z $modified_files ]] && [[ -z $new_files ]]; then
-    echo "No modified or new files found"
-  fi
-
-  for file in $modified_files $new_files
-  do
-    pylint "${file}"
-  done
+	git branch --merged | egrep -v "(^\*|main|master|dev)" | xargs git branch -d
 }
 
 # Run pytest on changed files
-gst() {
-  local new_files modified_files
-  new_files=$(git status | grep 'new file:' | grep -e '^test_.*.py$' | awk '{print $3}')
-  modified_files=$(git status | grep 'modified:' | grep -e 'test_.*.py$' | awk '{print $2}')
+gt() {
+	local new_files modified_files
+	new_files=$(git status | grep 'new file:' | grep -e '^test_.*.py$' | awk '{print $3}')
+	modified_files=$(git status | grep 'modified:' | grep -e 'test_.*.py$' | awk '{print $2}')
 
-  if [[ -z $modified_files ]] && [[ -z $new_files ]]; then
-    echo "No modified or new files found"
-  fi
+	if [[ -z $modified_files ]] && [[ -z $new_files ]]; then
+		echo "No modified or new files found"
+	fi
 
-  for file in $modified_files $new_files
-  do
-    pytest "${file}"
-  done
+	for file in $modified_files $new_files; do
+		pytest "${file}"
+	done
 }
 
+# Prune all Docker containers and images
 docker-clean() {
-  # Stop all containers
-  docker stop $(sudo docker ps -a -q)
-  # Delete all containers
-  docker rm $(sudo docker ps -a -q)
-  # Delete all images
-  docker rmi $(sudo docker images -q)
+	# Stop all containers
+	docker stop $(sudo docker ps -a -q)
+	# Delete all containers
+	docker rm $(sudo docker ps -a -q)
+	# Delete all images
+	docker rmi $(sudo docker images -q)
 }
 
 # Change gcloud project
-function gcloud-project() {
-  local current_project=$(gcloud config list project --format "value(core.project)")
-  echo "Current project: ${current_project}"
-  if ! type gcloud &>/dev/null; then
-    echo "gcloud not found" >&2
-    return 1
-  fi
-  local proj=$(gcloud projects list | fzf --height 50% --header-lines=1 --reverse --multi --cycle | awk '{print $1}')
-  if [[ -n $proj ]]; then
-    gcloud config set project $proj
-    return $?
-  fi
+gcloud-project() {
+	if ! type gcloud &>/dev/null; then
+		echo "gcloud not found" >&2
+		return 1
+	fi
+	local current_project=$(gcloud config list project --format "value(core.project)")
+	echo "Current project: ${current_project}"
+	local proj=$(gcloud projects list | fzf --height 50% --header-lines=1 --reverse --multi --cycle | awk '{print $1}')
+	if [[ -n $proj ]]; then
+		gcloud config set project $proj
+		return $?
+	fi
 }
 
 # Change kubernetes context
-function kube-context() {
-  local current_context=$(kubectl config current-context)
-  echo "Current context: ${current_context}"
-  if ! type kubectl &>/dev/null; then
-    echo "kubectl not found" >&2
-    return 1
-  fi
-  local context=$(kubectl config get-contexts | fzf --height 50% --header-lines=1 --reverse --multi --cycle | awk '{print $1}')
-  if [[ -n $context ]]; then
-    kubectl config use-context $context
-    return $?
-  fi
+kube-context() {
+	if ! type kubectl &>/dev/null; then
+		echo "kubectl not found" >&2
+		return 1
+	fi
+	local current_context=$(kubectl config current-context)
+	echo "Current context: ${current_context}"
+	local context=$(kubectl config get-contexts | fzf --height 50% --header-lines=1 --reverse --multi --cycle | awk '{print $1}')
+	if [[ -n $context ]]; then
+		kubectl config use-context $context
+		return $?
+	fi
 }
