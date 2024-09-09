@@ -6,130 +6,47 @@ tap "homebrew/bundle"
 tap "homebrew/core"
 
 # Binaries
-brew "ammonite-repl"
-brew "antidote"
-brew "autoconf"
-brew "automake"
-brew "awscli"
-brew "bat"
-brew "bison"
-brew "black"
-brew "bzip2"
-brew "c-ares"
-brew "cmake"
+brew "bat" # Clone of cat with syntax highlighting and Git integration
 brew "coreutils" # Those that come with macOS are outdated
 brew "curl"
-brew "dep"
-brew "diff-so-fancy"
-brew "ejson"
-brew "eza"
-brew "exiftool"
-brew "fd"
-brew "ffmpeg"
-brew "fontconfig"
-brew "fortune"
-brew "freetype"
-brew "fzf"
+brew "diff-so-fancy" # Diff highlighting tool
+brew "eza" # A modern alternative to ls
+brew "fd" # Simple, fast and user-friendly alternative to find
+brew "fzf" # Command-line fuzzy finder written in Go
 brew "gcc"
-brew "gd"
-brew "gdbm"
-brew "gdrive"
-brew "geoip"
-brew "gettext"
-brew "gflags"
-brew "gh"
-brew "ghostscript"
+brew "gh" # GitHub command-line tool
 brew "git"
-brew "gmp"
-brew "gnupg"
-brew "go"
-brew "google-cloud-sdk"
-brew "graphviz"
-brew "grep"
-brew "grpc"
-brew "hadoop"
-brew "htop"
-brew "httpie"
-brew "icu4c"
-brew "isl"
-brew "jemalloc"
-brew "jpeg"
-brew "jq"
-brew "kubernetes-cli"
-brew "libev"
-brew "libevent"
-brew "libffi"
-brew "libidn2"
-brew "libmemcached"
-brew "libmpc"
-brew "libpng"
-brew "librdkafka"
-brew "libssh2"
-brew "libtermkey"
-brew "libtiff"
-brew "libtool"
-brew "libunistring"
-brew "libuv"
-brew "libvterm"
-brew "libxml2"
-brew "libyaml"
-brew "little-cms2"
-brew "luajit"
-brew "lz4"
-brew "lzlib"
-brew "makedepend"
-brew "mas"
-brew "maven"
-brew "memcached"
-brew "mpfr"
-brew "msgpack"
-brew "mysql"
-brew "ncdu"
+brew "go" # Go programming language
+brew "htop" # Improved top
+brew "httpie" # User-friendly cURL replacement
+brew "jq" # Lightweight and flexible command-line JSON processor
+brew "libffi" # Portable Foreign Function Interface library
+brew "libssh2" # C library implementing the SSH2 protocol
+brew "libtermkey" # Library for processing keyboard entry from the terminal
+brew "libxml2" # XML library
+brew "libyaml" # YAML Parser
+brew "lzlib" # Data compression library
+brew "mas" # Mac App Store command-line interface
+brew "ncdu" # NCurses Disk Usage
 brew "ncurses"
-brew "neovim"
-brew "node"
-brew "oauth-tunnel-client"
-brew "oniguruma"
+brew "neovim" # Neovim editor
 brew "openssl"
-brew "pcre2"
-brew "pcre"
-brew "pipenv"
-brew "pkg-config"
+brew "pkg-config" # Manage compile and link flags for libraries
 brew "postgresql"
-brew "presto-cli"
-brew "presto-jdbc"
-brew "prettyping"
-brew "protobuf"
-brew "prototool"
-brew "pstree"
-brew "pyenv"
-brew "pyenv-virtualenv"
 brew "python3"
 brew "python"
-brew "readline"
-brew "ripgrep"
-brew "sbt"
-brew "scala"
-brew "shellcheck"
-brew "snappy"
+brew "readline" # Library for command-line editing
+brew "ripgrep" # Search tool like grep
+brew "shellcheck" # Static analysis and lint tool, for (ba)sh scripts
 brew "sqlite"
-brew "swig"
-brew "tree"
-brew "unibilium"
-brew "watchman"
-brew "webp"
 brew "wget"
-brew "xhyve"
-brew "xz"
-brew "zeromq"
 brew "zlib"
+brew "zplug" # Plugin manager for zsh
 brew "zsh"
-brew "zstd"
 
 # Apps
 mas "1password", id: 443987910
 mas "alfred", id: 405843582
-mas "bear", id: 1091189122
 mas "slack", id: 803453959
 mas "paprika", id: 1303222628
 
