@@ -130,8 +130,8 @@
   path = .gitconfig.user
 [user]
 	name = Pierre Accorsi
-	mail = pierre.accorsi@shopify.com
-	email = pierre.accorsi@shopify.com
+	mail = paccorsi@gmail.com
+	email = paccorsi@gmail.com
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
