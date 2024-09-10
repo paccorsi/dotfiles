@@ -6,6 +6,7 @@ tap "homebrew/bundle"
 tap "homebrew/core"
 
 # Binaries
+brew "antidote" # ZSH plugin manager
 brew "bat" # Clone of cat with syntax highlighting and Git integration
 brew "coreutils" # Those that come with macOS are outdated
 brew "curl"
@@ -41,7 +42,6 @@ brew "shellcheck" # Static analysis and lint tool, for (ba)sh scripts
 brew "sqlite"
 brew "wget"
 brew "zlib"
-brew "zplug" # Plugin manager for zsh
 brew "zsh"
 
 # Apps
