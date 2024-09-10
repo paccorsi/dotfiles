@@ -5,4 +5,3 @@ zsh-users/zsh-history-substring-search
 zsh-users/zsh-autosuggestions
 
 djui/alias-tips
-Tarrasch/zsh-bd
