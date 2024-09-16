@@ -1,18 +1,19 @@
 export TERM="xterm-256color"
-
-# Antidote ZSH plugins
-source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
-source ~/.zsh_plugins
-
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
-# History size
+# Source Antidote and ZSH plugins
+source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
+source ~/.zsh_plugins
+
+# History configuration
 export HISTSIZE=100000
 export HISTFILESIZE=100000
 export HISTFILE=~/.zhistory
-setopt HIST_FIND_NO_DUPS
-setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS    # Do not display a previously found event.
+setopt HIST_IGNORE_ALL_DUPS # Delete an old recorded event if a new event is a duplicate.
+setopt HIST_IGNORE_SPACE    # Do not record an event starting with a space.
+setopt SHARE_HISTORY        # Share history between all sessions.
 
 # Include exports
 [[ -f ~/.exports ]] && source ~/.exports
