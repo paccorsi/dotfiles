@@ -10,6 +10,7 @@ extract() {
 		# display usage if no parameters given
 		echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz|.zlib|.cso|.zst>"
 		echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
+		return 1
 	fi
 	for n in "$@"; do
 		if [ ! -f "$n" ]; then
@@ -65,7 +66,7 @@ update() {
 
 # Make a backup of a file
 bk() {
-	if [[ -z $1 ]]; then
+	if [ $# -eq 0 ]; then
 		print "Usage: bk <FILE>"
 		return 1
 	fi
@@ -76,24 +77,12 @@ bk() {
 
 # Get the content type of an http resource
 htmime() {
-	if [[ -z $1 ]]; then
+	if [ $# -eq 0 ]; then
 		print "Usage: htmime <URL>"
 		return 1
 	fi
 	local mime=$(curl -sIX HEAD $1 | sed -nr "s/Content-Type: (.+)/\1/p")
 	echo "$mime"
-}
-
-# Display a list of supported colors
-lscolors() {
-	((cols = $COLUMNS - 4))
-	s=$(printf %${cols}s)
-	for i in {000..$(tput colors)}; do
-		echo -e $i $(
-			tput setaf $i
-			tput setab $i
-		)${s// /=}$(tput op)
-	done
 }
 
 # Pring public IP

@@ -9,7 +9,6 @@ tap "homebrew/core"
 brew "antidote" # ZSH plugin manager
 brew "bat" # Clone of cat with syntax highlighting and Git integration
 brew "coreutils" # Those that come with macOS are outdated
-brew "curl"
 brew "diff-so-fancy" # Diff highlighting tool
 brew "eza" # A modern alternative to ls
 brew "fd" # Simple, fast and user-friendly alternative to find
@@ -34,8 +33,6 @@ brew "neovim" # Neovim editor
 brew "openssl"
 brew "pkg-config" # Manage compile and link flags for libraries
 brew "postgresql"
-brew "python3"
-brew "python"
 brew "readline" # Library for command-line editing
 brew "ripgrep" # Search tool like grep
 brew "shellcheck" # Static analysis and lint tool, for (ba)sh scripts
