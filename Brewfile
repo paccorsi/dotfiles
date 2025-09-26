@@ -43,7 +43,6 @@ brew "zsh"
 
 # Apps
 mas "1password", id: 443987910
-mas "alfred", id: 405843582
 mas "slack", id: 803453959
 mas "paprika", id: 1303222628
 
