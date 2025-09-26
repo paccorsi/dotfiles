@@ -67,3 +67,4 @@ alias path='echo $PATH | tr -s ":" "\n"' # Pretty print the path
 
 # Python
 alias t="py.test -vv"
+alias python-server="python -m http.server 8000"

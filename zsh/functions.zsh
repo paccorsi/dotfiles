@@ -189,21 +189,6 @@ git-clean-branches() {
 	git branch --merged | egrep -v "(^\*|main|master|dev)" | xargs git branch -d
 }
 
-# Run pytest on changed files
-gt() {
-	local new_files modified_files
-	new_files=$(git status | grep 'new file:' | grep -e '^test_.*.py$' | awk '{print $3}')
-	modified_files=$(git status | grep 'modified:' | grep -e 'test_.*.py$' | awk '{print $2}')
-
-	if [[ -z $modified_files ]] && [[ -z $new_files ]]; then
-		echo "No modified or new files found"
-	fi
-
-	for file in $modified_files $new_files; do
-		pytest "${file}"
-	done
-}
-
 # Prune all Docker containers and images
 docker-clean() {
 	# Stop all containers
